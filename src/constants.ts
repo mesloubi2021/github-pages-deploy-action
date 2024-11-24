@@ -38,6 +38,8 @@ export interface ActionInterface {
   folderPath?: string
   /** Whether to force-push or attempt to merge existing changes. */
   force?: boolean
+  /** How many times to attempt to merge existing changes into the remote HEAD. */
+  attemptLimit?: number;
   /** Determines test scenarios the action is running in. */
   isTest: TestFlag
   /** The git config name. */
@@ -95,6 +97,9 @@ export const action: ActionInterface = {
   force: !isNullOrUndefined(getInput('force'))
     ? getInput('force').toLowerCase() === 'true'
     : true,
+  attemptLimit: !isNullOrUndefined(getInput('attempt-limit'))
+    ? parseInt(getInput('attempt-limit'), 10)
+    : 3,
   clean: !isNullOrUndefined(getInput('clean'))
     ? getInput('clean').toLowerCase() === 'true'
     : false,

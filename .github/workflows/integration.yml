@@ -15,10 +15,10 @@ jobs:
           apt-get update && apt-get install -y rsync
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           git-config-name: Montezuma
           git-config-email: montezuma@jamesiv.es
@@ -35,10 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           folder: integration
@@ -58,12 +58,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           folder: integration
           target-folder: cat/montezuma2
@@ -87,7 +87,7 @@ jobs:
         LANG: C.UTF-8
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
@@ -96,7 +96,7 @@ jobs:
           apt-get update && apt-get install -y rsync
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           folder: integration
           target-folder: cat/montezuma2
@@ -116,12 +116,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
           folder: integration
@@ -142,7 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
@@ -152,7 +152,7 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           ssh-key: true
           folder: integration
@@ -172,16 +172,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@releases/v4-beta
         with:
           node-version-file: '.node-version'
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
           folder: integration
@@ -191,7 +191,7 @@ jobs:
           git-config-email: montezuma@jamesiv.es
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
           folder: integration
@@ -220,12 +220,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           folder: integration
@@ -240,12 +240,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           branch: integration-test-delete-prod
@@ -256,7 +256,7 @@ jobs:
           git-config-email: montezuma@jamesiv.es
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           branch: integration-test-delete-prod
@@ -280,13 +280,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
 
       - name: Create random file
         run: echo $RANDOM > integration/1
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           git-config-name: Montezuma
           git-config-email: montezuma@jamesiv.es
@@ -302,13 +302,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
 
       - name: Create random file
         run: echo $RANDOM > integration/2
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           git-config-name: Montezuma
           git-config-email: montezuma@jamesiv.es
@@ -336,7 +336,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@releases/v4-beta
         with:
           persist-credentials: false
 
@@ -346,7 +346,7 @@ jobs:
           echo "Here"
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@releases/v4-beta
         with:
           folder: .
           target-folder: cat/montezuma5

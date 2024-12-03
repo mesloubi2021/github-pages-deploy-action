@@ -12,7 +12,8 @@ import {generateWorktree} from './worktree'
 import {
   extractErrorMessage,
   isNullOrUndefined,
-  suppressSensitiveInformation
+  suppressSensitiveInformation,
+  getRsyncVersion
 } from './util'
 
 /**
@@ -110,6 +111,8 @@ export async function deploy(action: ActionInterface): Promise<Status> {
   const temporaryDeploymentBranch = `github-pages-deploy-action/${Math.random()
     .toString(36)
     .substr(2, 9)}`
+  const rsyncVersion = getRsyncVersion()
+  const isMkpathSupported = rsyncVersion >= '3.2.3'
 
   info('Starting to commit changes…')
 
@@ -166,7 +169,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       Allows the user to specify the root if '.' is provided.
       rsync is used to prevent file duplication. */
     await execute(
-      `rsync -q -av --checksum --progress ${action.targetFolder ? '--mkpath' : ''} ${action.folderPath}/. ${
+      `rsync -q -av --checksum --progress ${isMkpathSupported && action.targetFolder ? '--mkpath' : ''} ${action.folderPath}/. ${
         action.targetFolder
           ? `${temporaryDeploymentDirectory}/${action.targetFolder}`
           : temporaryDeploymentDirectory

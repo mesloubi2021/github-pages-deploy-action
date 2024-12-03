@@ -1,4 +1,5 @@
 import {isDebug, warning} from '@actions/core'
+import {execSync} from 'child_process'
 import {existsSync} from 'fs'
 import path from 'path'
 import {
@@ -140,3 +141,20 @@ export const extractErrorMessage = (error: unknown): string =>
  */
 export const stripProtocolFromUrl = (url: string): string =>
   url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '').split('/')[0]
+
+/**
+ * Gets the rsync version.
+ */
+export function getRsyncVersion(): string {
+  try {
+    const versionOutput = execSync('rsync --version').toString()
+    const versionMatch = versionOutput.match(
+      /rsync\s+version\s+(\d+\.\d+\.\d+)/
+    )
+    return versionMatch ? versionMatch[1] : ''
+  } catch (error) {
+    console.error(error)
+
+    return ''
+  }
+}

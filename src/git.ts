@@ -29,7 +29,7 @@ export async function init(action: ActionInterface): Promise<void | Error> {
      */
     try {
       await execute(
-        `git config --global --add safe.directory "${action.workspace}"`,
+        `git config --system --add safe.directory "${action.workspace}"`,
         action.workspace,
         action.silent
       )

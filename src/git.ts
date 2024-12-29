@@ -29,7 +29,7 @@ export async function init(action: ActionInterface): Promise<void | Error> {
      */
     try {
       await execute(
-        `git config --global --add safe.directory "${action.workspace}"`,
+        `git config --system --add safe.directory "${action.workspace}"`,
         action.workspace,
         action.silent
       )
@@ -164,6 +164,13 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       await mkdirP(`${temporaryDeploymentDirectory}/${action.targetFolder}`)
     }
 
+    /* Relaxes permissions of folder due to be deployed so rsync can write to/from it. */
+    await execute(
+      `chmod -R +rw ${action.folderPath}`,
+      action.workspace,
+      action.silent
+    )
+
     /*
       Pushes all of the build files into the deployment directory.
       Allows the user to specify the root if '.' is provided.
@@ -191,7 +198,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
           : ''
       }  --exclude ${DefaultExcludedFiles.SSH} --exclude ${
         DefaultExcludedFiles.GIT
-      } --exclude ${DefaultExcludedFiles.GITHUB} ${
+      } ${
         action.folderPath === action.workspace
           ? `--exclude ${temporaryDeploymentDirectory}`
           : ''

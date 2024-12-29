@@ -164,6 +164,13 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       await mkdirP(`${temporaryDeploymentDirectory}/${action.targetFolder}`)
     }
 
+    /* Relaxes permissions of folder due to be deployed so rsync can write to/from it. */
+    await execute(
+      `chmod -R +rw ${action.folderPath}`,
+      action.workspace,
+      action.silent
+    )
+
     /*
       Pushes all of the build files into the deployment directory.
       Allows the user to specify the root if '.' is provided.

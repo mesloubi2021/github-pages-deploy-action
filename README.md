@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/marketplace/actions/deploy-to-github-pages">
-    <img alt="GitHub Pages Deploy Action Logo" width="200px" src="https://github.com/JamesIves/github-pages-deploy-action/raw/dev/.github/assets/icon.png">
+    <img alt="GitHub Pages Deploy Action Logo" width="200px" src="https://github.com/JamesIves/github-pages-deploy-action/raw/dev/.github/docs/icon.png">
   </a>
 </p>
 
@@ -35,19 +35,19 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/JamesIves/github-pages-deploy-action/raw/dev/.github/assets/screenshot.png" alt="">
+  <img src="https://github.com/JamesIves/github-pages-deploy-action/raw/dev/.github/docs/screenshot.png" alt="">
 </p>
 
 <p align="center">
- Maintenance of this project is made possible by all the <a href="https://github.com/JamesIves/github-pages-deploy-action/graphs/contributors">contributors</a> and <a href="https://github.com/sponsors/JamesIves">sponsors</a>. If you'd like to sponsor this project and have your avatar or company logo appear below <a href="https://github.com/sponsors/JamesIves">click here</a>. 💖
+Maintenance of this project is made possible by all the <a href="https://github.com/JamesIves/github-pages-deploy-action/graphs/contributors">contributors</a> and <a href="https://github.com/sponsors/JamesIves">sponsors</a>. If you'd like to sponsor this project and have your avatar or company logo appear below <a href="https://github.com/sponsors/JamesIves">click here</a>. 💖
 </p>
 
 <p align="center">
-<!-- premium --><!-- premium -->
+<!-- premium --><a href="https://github.com/github"><img src="https://github.com/github.png" width="80px" alt="github" /></a>&nbsp;&nbsp;<a href="https://github.com/annegentle"><img src="https://github.com/annegentle.png" width="80px" alt="annegentle" /></a>&nbsp;&nbsp;<a href="https://github.com/tonjohn"><img src="https://github.com/tonjohn.png" width="80px" alt="tonjohn" /></a>&nbsp;&nbsp;<!-- premium -->
 </p>
 
 <p align="center">
-<!-- sponsors --><a href="https://github.com/Chooksta69"><img src="https://github.com/Chooksta69.png" width="50px" alt="Chooksta69" /></a>&nbsp;&nbsp;<a href="https://github.com/robjtede"><img src="https://github.com/robjtede.png" width="50px" alt="robjtede" /></a>&nbsp;&nbsp;<a href="https://github.com/hadley"><img src="https://github.com/hadley.png" width="50px" alt="hadley" /></a>&nbsp;&nbsp;<a href="https://github.com/kevinchalet"><img src="https://github.com/kevinchalet.png" width="50px" alt="kevinchalet" /></a>&nbsp;&nbsp;<!-- sponsors -->
+<!-- sponsors --><a href="https://github.com/Chooksta69"><img src="https://github.com/Chooksta69.png" width="50px" alt="Chooksta69" /></a>&nbsp;&nbsp;<a href="https://github.com/MattWillFlood"><img src="https://github.com/MattWillFlood.png" width="50px" alt="MattWillFlood" /></a>&nbsp;&nbsp;<a href="https://github.com/jonathan-milan-pollock"><img src="https://github.com/jonathan-milan-pollock.png" width="50px" alt="jonathan-milan-pollock" /></a>&nbsp;&nbsp;<a href="https://github.com/raoulvdberge"><img src="https://github.com/raoulvdberge.png" width="50px" alt="raoulvdberge" /></a>&nbsp;&nbsp;<a href="https://github.com/robjtede"><img src="https://github.com/robjtede.png" width="50px" alt="robjtede" /></a>&nbsp;&nbsp;<a href="https://github.com/hadley"><img src="https://github.com/hadley.png" width="50px" alt="hadley" /></a>&nbsp;&nbsp;<a href="https://github.com/kevinchalet"><img src="https://github.com/kevinchalet.png" width="50px" alt="kevinchalet" /></a>&nbsp;&nbsp;<a href="https://github.com/Yousazoe"><img src="https://github.com/Yousazoe.png" width="50px" alt="Yousazoe" /></a>&nbsp;&nbsp;<a href="https://github.com/planetoftheweb"><img src="https://github.com/planetoftheweb.png" width="50px" alt="planetoftheweb" /></a>&nbsp;&nbsp;<a href="https://github.com/melton1968"><img src="https://github.com/melton1968.png" width="50px" alt="melton1968" /></a>&nbsp;&nbsp;<a href="https://github.com/szepeviktor"><img src="https://github.com/szepeviktor.png" width="50px" alt="szepeviktor" /></a>&nbsp;&nbsp;<a href="https://github.com/sckott"><img src="https://github.com/sckott.png" width="50px" alt="sckott" /></a>&nbsp;&nbsp;<a href="https://github.com/provinzkraut"><img src="https://github.com/provinzkraut.png" width="50px" alt="provinzkraut" /></a>&nbsp;&nbsp;<a href="https://github.com/electrovir"><img src="https://github.com/electrovir.png" width="50px" alt="electrovir" /></a>&nbsp;&nbsp;<a href="https://github.com/Griefed"><img src="https://github.com/Griefed.png" width="50px" alt="Griefed" /></a>&nbsp;&nbsp;<a href="https://github.com/MontezumaIves"><img src="https://github.com/MontezumaIves.png" width="50px" alt="MontezumaIves" /></a>&nbsp;&nbsp;<a href="https://github.com/wylie"><img src="https://github.com/wylie.png" width="50px" alt="wylie" /></a>&nbsp;&nbsp;<!-- sponsors -->
 </p>
 
 ## Getting Started :airplane:
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
@@ -80,6 +80,9 @@ jobs:
           folder: build # The folder the action should deploy.
 ```
 
+> [!NOTE]
+> You must configure your repository to deploy from the branch you push to. To do this, go to your repository settings, click on `Pages`, and choose `Deploy from a Branch` from the `Source` dropdown. From there select the branch you supplied to the action. In most cases this will be `gh-pages` as that's the default.
+
 If you'd like to make it so the workflow only triggers on push events to specific branches then you can modify the `on` section.
 
 ```yml
@@ -89,7 +92,7 @@ on:
       - main
 ```
 
-> **Warning**
+> [!WARNING]
 > If you do not supply the action with an access token or an SSH key, you must access your repositories settings and provide `Read and Write Permissions` to the provided `GITHUB_TOKEN`, otherwise you'll potentially run into permission issues. Alternatively you can set the following in your workflow file to grant the action the permissions it needs.
 
 ```yml
@@ -105,9 +108,9 @@ The `with` portion of the workflow **must** be configured before the action will
 
 The following options must be configured in order to make a deployment.
 
-| Key      | Value Information                                                                                                                                                                                                                                                                         | Type   | Required |
-| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | -------- |
-| `folder` | The folder in your repository that you want to deploy. If your build script compiles into a directory named `build` you'd put it here. If you wish to deploy the root directory you can place a `.` here. You can also utilize absolute file paths by prepending `~` to your folder path. | `with` | **Yes**  |
+| Key      | Value Information                                                                                                                                                                                                                                                                                                                                                                                                                        | Type   | Required |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | -------- |
+| `folder` | The folder in your repository that you want to deploy. If your build script compiles into a directory named `build` you'd put it here. If you wish to deploy the root directory you can place a `.` here. You can also utilize absolute file paths by prepending `~` to your folder path. Note that any files/folders matching `.gitignore` entries will not be deployed. Some tools auto-generate a `.gitignore` file for build output. | `with` | **Yes**  |
 
 By default, the action does not need any token configuration and uses the provided repository scoped GitHub token to make the deployment. If you require more customization you can modify the deployment type using the following options.
 
@@ -131,6 +134,7 @@ By default, the action does not need any token configuration and uses the provid
 | `dry-run`          | Do not actually push back, but use `--dry-run` on `git push` invocations instead.                                                                                                                                                                                                                                                                                           | `with` | **No**   |
 | `single-commit`    | This option can be toggled to `true` if you'd prefer to have a single commit on the deployment branch instead of maintaining the full history. **Using this option will also cause any existing history to be wiped from the deployment branch**.                                                                                                                           | `with` | **No**   |
 | `force`            | Force-push new deployments to overwrite the previous version; otherwise, attempt to rebase new deployments onto any existing ones. This option is turned on by default and can be toggled off by setting it to `false`, which may be useful if there are multiple deployments in a single branch.                                                                           | `with` | **No**   |
+| `attempt-limit`    | How many rebase attempts to make before suspending the job. This option defaults to `3` and may be useful to increase when there are multiple deployments in a single branch.                                                                                                                                                                                               | `with` | **No**   |
 | `silent`           | Silences the action output preventing it from displaying git messages.                                                                                                                                                                                                                                                                                                      | `with` | **No**   |
 | `tag`              | Add a tag to the commit. Only works when `dry-run` is not used.                                                                                                                                                                                                                                                                                                             | `with` | **No**   |
 
@@ -185,7 +189,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
@@ -235,7 +239,7 @@ jobs:
     runs-on: windows-latest # The first job utilizes windows-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
@@ -254,7 +258,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download Artifacts 🔻 # The built project is downloaded into the 'site' folder.
         uses: actions/download-artifact@v1
@@ -308,7 +312,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |

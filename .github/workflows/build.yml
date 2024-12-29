@@ -1,4 +1,4 @@
-name: unit-tests
+name: Unit Tests 🧪
 on:
   pull_request:
     branches:
@@ -6,7 +6,7 @@ on:
       - 'releases/v*'
   push:
     branches:
-      - 'dev*'
+      - '*'
     tags-ignore:
       - '*.*'
 jobs:
@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 'v16.13.2'
+          node-version-file: '.node-version'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Yarn
@@ -32,7 +32,7 @@ jobs:
           yarn test
 
       - name: Uploade CodeCov Report
-        uses: codecov/codecov-action@v3.1.1
+        uses: codecov/codecov-action@v5.1.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -40,11 +40,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 'v16.13.2'
+          node-version-file: '.node-version'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Yarn
@@ -61,7 +61,7 @@ jobs:
           ls node_modules
 
       - name: artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: |
@@ -78,17 +78,17 @@ jobs:
       max-parallel: 1
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 'v16.13.2'
+          node-version-file: '.node-version'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
 

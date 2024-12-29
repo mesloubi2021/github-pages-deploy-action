@@ -1,5 +1,5 @@
 import {exportVariable, info, notice, setFailed, setOutput} from '@actions/core'
-import {ActionInterface, NodeActionInterface, Status} from './constants'
+import {action, ActionInterface, NodeActionInterface, Status} from './constants'
 import {deploy, init} from './git'
 import {configureSSH} from './ssh'
 import {
@@ -11,12 +11,11 @@ import {
   isNullOrUndefined
 } from './util'
 
-/** Initializes and runs the action.
- *
- * @param {object} configuration - The action configuration.
+/**
+ * Initializes and runs the action.
  */
 export default async function run(
-  configuration: ActionInterface | NodeActionInterface
+  configuration?: ActionInterface | NodeActionInterface
 ): Promise<void> {
   let status: Status = Status.RUNNING
 
@@ -51,12 +50,14 @@ export default async function run(
     info('Checking configuration and starting deployment… 🚦')
 
     const settings: ActionInterface = {
-      ...configuration,
-      // Set the default branch for Node configurations
-      branch: !isNullOrUndefined(configuration.branch)
-        ? configuration.branch
-        : 'gh-pages'
+      ...action,
+      ...configuration
     }
+
+    // Sets the branch to the default value if it's not defined
+    settings.branch = !isNullOrUndefined(settings.branch)
+      ? settings.branch
+      : 'gh-pages'
 
     // Defines the repository/folder paths and token types.
     // Also verifies that the action has all of the required parameters.

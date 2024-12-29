@@ -12,7 +12,8 @@ import {generateWorktree} from './worktree'
 import {
   extractErrorMessage,
   isNullOrUndefined,
-  suppressSensitiveInformation
+  suppressSensitiveInformation,
+  getRsyncVersion
 } from './util'
 
 /**
@@ -23,6 +24,9 @@ export async function init(action: ActionInterface): Promise<void | Error> {
     info(`Deploying using ${action.tokenType}… 🔑`)
     info('Configuring git…')
 
+    /**
+     * Ensure that the workspace is a safe directory.
+     */
     try {
       await execute(
         `git config --global --add safe.directory "${action.workspace}"`,
@@ -107,6 +111,8 @@ export async function deploy(action: ActionInterface): Promise<Status> {
   const temporaryDeploymentBranch = `github-pages-deploy-action/${Math.random()
     .toString(36)
     .substr(2, 9)}`
+  const rsyncVersion = getRsyncVersion()
+  const isMkpathSupported = rsyncVersion >= '3.2.3'
 
   info('Starting to commit changes…')
 
@@ -163,7 +169,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       Allows the user to specify the root if '.' is provided.
       rsync is used to prevent file duplication. */
     await execute(
-      `rsync -q -av --checksum --progress ${action.folderPath}/. ${
+      `rsync -q -av --checksum --progress ${isMkpathSupported && action.targetFolder ? '--mkpath' : ''} ${action.folderPath}/. ${
         action.targetFolder
           ? `${temporaryDeploymentDirectory}/${action.targetFolder}`
           : temporaryDeploymentDirectory
@@ -265,7 +271,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
         action.silent
       )
     } else {
-      const ATTEMPT_LIMIT = 3
+      const attemptLimit = action.attemptLimit || 3
       // Attempt to push our changes, but fetch + rebase if there were
       // other changes added in the meantime
       let attempt = 0
@@ -276,7 +282,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       do {
         attempt++
 
-        if (attempt > ATTEMPT_LIMIT) throw new Error(`Attempt limit exceeded`)
+        if (attempt > attemptLimit) throw new Error(`Attempt limit exceeded`)
 
         // Handle rejection for the previous attempt first such that, on
         // the final attempt, time is not wasted rebasing it when it will
@@ -296,7 +302,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
           )
         }
 
-        info(`Pushing changes… (attempt ${attempt} of ${ATTEMPT_LIMIT})`)
+        info(`Pushing changes… (attempt ${attempt} of ${attemptLimit})`)
 
         const pushResult = await execute(
           `git push --porcelain ${action.repositoryPath} ${temporaryDeploymentBranch}:${action.branch}`,
@@ -314,8 +320,12 @@ export async function deploy(action: ActionInterface): Promise<Status> {
 
         // If the push failed for any fatal reason other than being rejected,
         // there is a problem
-        if (!rejected && pushResult.stderr.trim().startsWith('fatal:'))
+        if (
+          !rejected &&
+          pushResult.stderr.split(/\n/).some(s => s.trim().startsWith('fatal:'))
+        ) {
           throw new Error(pushResult.stderr)
+        }
       } while (rejected)
     }
 

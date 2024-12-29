@@ -41,7 +41,7 @@ describe('main', () => {
   it('should run through the commands', async () => {
     Object.assign(action, {
       repositoryPath: 'JamesIves/github-pages-deploy-action',
-      folder: '.github/assets',
+      folder: '.github/docs',
       branch: 'branch',
       token: '123',
       hostname: 'github.com',
@@ -53,16 +53,16 @@ describe('main', () => {
       debug: true
     })
     await run(action)
-    expect(execute).toBeCalledTimes(18)
-    expect(rmRF).toBeCalledTimes(1)
-    expect(exportVariable).toBeCalledTimes(1)
+    expect(execute).toHaveBeenCalledTimes(19)
+    expect(rmRF).toHaveBeenCalledTimes(1)
+    expect(exportVariable).toHaveBeenCalledTimes(1)
   })
 
   it('should run through the commands and succeed', async () => {
     Object.assign(action, {
       hostname: 'github.com',
       repositoryPath: 'JamesIves/github-pages-deploy-action',
-      folder: '.github/assets',
+      folder: '.github/docs',
       branch: 'branch',
       token: '123',
       sshKey: true,
@@ -73,15 +73,15 @@ describe('main', () => {
       isTest: TestFlag.HAS_CHANGED_FILES
     })
     await run(action)
-    expect(execute).toBeCalledTimes(21)
-    expect(rmRF).toBeCalledTimes(1)
-    expect(exportVariable).toBeCalledTimes(1)
+    expect(execute).toHaveBeenCalledTimes(22)
+    expect(rmRF).toHaveBeenCalledTimes(1)
+    expect(exportVariable).toHaveBeenCalledTimes(1)
   })
 
   it('should throw if an error is encountered', async () => {
     Object.assign(action, {
       hostname: 'github.com',
-      folder: '.github/assets',
+      folder: '.github/docs',
       branch: 'branch',
       token: null,
       sshKey: null,
@@ -92,8 +92,8 @@ describe('main', () => {
       isTest: TestFlag.HAS_CHANGED_FILES
     })
     await run(action)
-    expect(execute).toBeCalledTimes(0)
-    expect(setFailed).toBeCalledTimes(1)
-    expect(exportVariable).toBeCalledTimes(1)
+    expect(execute).toHaveBeenCalledTimes(0)
+    expect(setFailed).toHaveBeenCalledTimes(1)
+    expect(exportVariable).toHaveBeenCalledTimes(1)
   })
 })

@@ -4,7 +4,9 @@ import {isNullOrUndefined, stripProtocolFromUrl} from './util'
 
 const {pusher, repository} = github.context.payload
 
-/* Flags to signal different scenarios to test cases */
+/*
+ * Flags to signal different scenarios to test cases
+ */
 export enum TestFlag {
   NONE = 0,
   HAS_CHANGED_FILES = 1 << 1, // Assume changes to commit.
@@ -36,6 +38,8 @@ export interface ActionInterface {
   folderPath?: string
   /** Whether to force-push or attempt to merge existing changes. */
   force?: boolean
+  /** How many times to attempt to merge existing changes into the remote HEAD. */
+  attemptLimit?: number
   /** Determines test scenarios the action is running in. */
   isTest: TestFlag
   /** The git config name. */
@@ -93,6 +97,9 @@ export const action: ActionInterface = {
   force: !isNullOrUndefined(getInput('force'))
     ? getInput('force').toLowerCase() === 'true'
     : true,
+  attemptLimit: !isNullOrUndefined(getInput('attempt-limit'))
+    ? parseInt(getInput('attempt-limit'), 10)
+    : 3,
   clean: !isNullOrUndefined(getInput('clean'))
     ? getInput('clean').toLowerCase() === 'true'
     : false,
@@ -106,26 +113,26 @@ export const action: ActionInterface = {
   email: !isNullOrUndefined(getInput('git-config-email'))
     ? getInput('git-config-email')
     : pusher && pusher.email
-    ? pusher.email
-    : `${
-        process.env.GITHUB_ACTOR || 'github-pages-deploy-action'
-      }@users.noreply.${
-        process.env.GITHUB_SERVER_URL
-          ? stripProtocolFromUrl(process.env.GITHUB_SERVER_URL)
-          : 'github.com'
-      }`,
+      ? pusher.email
+      : `${
+          process.env.GITHUB_ACTOR || 'github-pages-deploy-action'
+        }@users.noreply.${
+          process.env.GITHUB_SERVER_URL
+            ? stripProtocolFromUrl(process.env.GITHUB_SERVER_URL)
+            : 'github.com'
+        }`,
   name: !isNullOrUndefined(getInput('git-config-name'))
     ? getInput('git-config-name')
     : pusher && pusher.name
-    ? pusher.name
-    : process.env.GITHUB_ACTOR
-    ? process.env.GITHUB_ACTOR
-    : 'GitHub Pages Deploy Action',
+      ? pusher.name
+      : process.env.GITHUB_ACTOR
+        ? process.env.GITHUB_ACTOR
+        : 'GitHub Pages Deploy Action',
   repositoryName: !isNullOrUndefined(getInput('repository-name'))
     ? getInput('repository-name')
     : repository && repository.full_name
-    ? repository.full_name
-    : process.env.GITHUB_REPOSITORY,
+      ? repository.full_name
+      : process.env.GITHUB_REPOSITORY,
   token: getInput('token'),
   singleCommit: !isNullOrUndefined(getInput('single-commit'))
     ? getInput('single-commit').toLowerCase() === 'true'
@@ -136,9 +143,9 @@ export const action: ActionInterface = {
   sshKey: isNullOrUndefined(getInput('ssh-key'))
     ? false
     : !isNullOrUndefined(getInput('ssh-key')) &&
-      getInput('ssh-key').toLowerCase() === 'true'
-    ? true
-    : getInput('ssh-key'),
+        getInput('ssh-key').toLowerCase() === 'true'
+      ? true
+      : getInput('ssh-key'),
   targetFolder: getInput('target-folder'),
   workspace: process.env.GITHUB_WORKSPACE || '',
   tag: getInput('tag')

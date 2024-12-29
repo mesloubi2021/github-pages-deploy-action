@@ -198,7 +198,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
           : ''
       }  --exclude ${DefaultExcludedFiles.SSH} --exclude ${
         DefaultExcludedFiles.GIT
-      } --exclude ${DefaultExcludedFiles.GITHUB} ${
+      } ${
         action.folderPath === action.workspace
           ? `--exclude ${temporaryDeploymentDirectory}`
           : ''
